@@ -31,7 +31,7 @@ class _IndexPageState extends State<IndexPage> {
     )
   ];
 
-  final List tabPages = [
+  final List<Widget> tabPages = [
     HomePage(),
     CategoryPage(),
     CartPage(),
@@ -41,6 +41,8 @@ class _IndexPageState extends State<IndexPage> {
   int currentIndex = 0;
   var currentPage;
 
+  final pageController = PageController();
+
   @override
   void initState() {
     currentPage = tabPages[currentIndex];
@@ -49,6 +51,7 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
+    // 屏幕适配， iphone6设计原型
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -58,11 +61,15 @@ class _IndexPageState extends State<IndexPage> {
         onTap: (int index) {
           setState(() {
             currentIndex = index;
-            currentPage = tabPages[currentIndex];
+            pageController.jumpToPage(index);
           });
         },
       ),
-      body: currentPage,
+      // PageView 页面保持状态，且只实例化当前页面
+      body: PageView(
+        controller: pageController,
+        children: tabPages
+      )
     );
   }
 }
