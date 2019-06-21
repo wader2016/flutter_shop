@@ -3,7 +3,9 @@ import '../service/home_service.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'amp_map.dart';
 import 'car_detail.dart';
+import 'maintenance_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -86,7 +88,29 @@ class NavigatorList extends StatelessWidget {
 
   Widget _gridViewBuild(BuildContext context, item) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        switch (item) {
+          case '新开网页':
+            Navigator.of(context).pushNamed('/webview');
+            break;
+          case '高德地图':
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AmpMap()
+                )
+            );
+            break;
+          case '折叠菜单':
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MaintenanceInfo()
+                )
+            );
+            break;
+        }
+      },
       child: Card(
         elevation: 4.0,
         child: Container(
